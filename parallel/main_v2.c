@@ -2,13 +2,14 @@
 #include <sys/time.h>
 #include <unistd.h>
 
-#define BRANCH 10
+//#define BRANCH 6
 
 #include "node.h"
 #include "lib.h"
 
 #define KERNEL "kernel_v2.cl"
-#define DATA "/home/jjun/opencl/astar/data/v10000.csv"
+#define DATA "/home/jjun/opencl/astar/data/100000+/v200000_e310000.csv"
+#define FACTOR 500
 
 int main(int argc, char *argv[]){
     FILE* stream = fopen(DATA, "r");
@@ -29,6 +30,7 @@ int main(int argc, char *argv[]){
 
     // Input
     fgets(line, 1024, stream);
+    //printf("%s\n", line);
 	tmp = strtok(line, ",");
 	for (int i = 0; tmp != NULL; i++, tmp = strtok(NULL, ",")){
 		if (i == 1)
@@ -45,9 +47,10 @@ int main(int argc, char *argv[]){
     prev = (int*)calloc(sizeof(int), n);
 
 	fgets(line, 1024, stream); // skip
-
+    //printf("%s\n", line);
 	for (int i = 0; i<n; i++){
 		fgets(line, 1024, stream);
+        //printf("%s\n", line);
 		tmp = strtok(line, ",");
 		for (int i = 0; tmp != NULL; i++, tmp = strtok(NULL, ",")){
 			if (i == 0)
@@ -65,8 +68,11 @@ int main(int argc, char *argv[]){
 	}
 	
 	fgets(line, 1024, stream); // skip
+    //printf("%s\n", line);
+
 	for (int i = 0; i<m; i++){
 		fgets(line, 1024, stream);
+        //printf("%s\n", line);
 		tmp = strtok(line, ",");
 		for (int i = 0; tmp != NULL; i++, tmp = strtok(NULL, ",")){
 			if (i == 0)
@@ -95,6 +101,7 @@ int main(int argc, char *argv[]){
 	}
 
 	fgets(line, 1024, stream);
+    //printf("1%s\n", line);
 	tmp = strtok(line, ",");
 	for (int i = 0; tmp != NULL; i++, tmp = strtok(NULL, ",")){
 		if (i == 1)
@@ -127,7 +134,7 @@ int main(int argc, char *argv[]){
     size_t kernel_source_size;
 
     size_t global_size = n;
-    size_t local_size = 500;
+    size_t local_size = FACTOR;
     size_t group_size = global_size / local_size;
 
     err = clGetPlatformIDs(1, &platform, &num_platforms);

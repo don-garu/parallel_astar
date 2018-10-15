@@ -9,7 +9,7 @@
 #include <sys/time.h>
 #include <unistd.h>
 
-#define VMAX 100000
+#define VMAX 200000
 #define EMAX 1000000
 #define INF 2100000000
 
@@ -19,7 +19,7 @@ double get_time(){
 	return (double)tv.tv_sec + (double)1e-6 * tv.tv_usec;
 }
 
-#define DATA "/home/jjun/opencl/astar/data/v10000.csv"
+#define DATA "/home/jjun/opencl/astar/data/100000+/v200000_e310000.csv"
 
 typedef struct {
 	int x, y;
