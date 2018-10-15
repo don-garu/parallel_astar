@@ -9,7 +9,7 @@
 #include <sys/time.h>
 #include <unistd.h>
 
-#define VMAX 200000
+#define VMAX 500000
 #define EMAX 1000000
 #define INF 2100000000
 
@@ -19,7 +19,7 @@ double get_time(){
 	return (double)tv.tv_sec + (double)1e-6 * tv.tv_usec;
 }
 
-#define DATA "/home/jjun/opencl/astar/data/100000+/v200000_e310000.csv"
+#define DATA "/home/jjun/opencl/astar/data/v500000_e1111111.csv"
 
 typedef struct {
 	int x, y;
@@ -150,6 +150,11 @@ int main(int argc, const char *argv[]){
 	printf("Total Weight : %f\n", dist[end]);
 
 	printf("time : %lf\n", elapsed);
+
+	FILE* fp_record = fopen("record_seq.txt", "a+");
+	fprintf(fp_record, "[%d] time : %lf\n", n, elapsed);
+	fclose(fp_record);
+
 	return 0;
 }
 // + sqrt(pow(location[v->first].x - location[end].x, 2) + pow(location[v->first].y - location[end].y, 2)) 

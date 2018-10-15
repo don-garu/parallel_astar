@@ -8,8 +8,8 @@
 #include "lib.h"
 
 #define KERNEL "kernel_v2.cl"
-#define DATA "/home/jjun/opencl/astar/data/100000+/v200000_e310000.csv"
-#define FACTOR 500
+#define DATA "/home/jjun/opencl/astar/data/v500000_e1111111.csv"
+#define FACTOR 100
 
 int main(int argc, char *argv[]){
     FILE* stream = fopen(DATA, "r");
@@ -322,6 +322,14 @@ int main(int argc, char *argv[]){
     printf("\n");
 
     printf("time : %lf\n", elapsed);
+
+    int want_file;
+    scanf("%d", &want_file);
+    if (want_file == 1){
+        FILE* fp_record = fopen("record_par.txt", "a+");
+	    fprintf(fp_record, "[%d] FACTOR %d, time : %lf\n", n, FACTOR, elapsed);
+	    fclose(fp_record);
+    }    
 
     return 0;
 }
